@@ -21,7 +21,6 @@ const slides = [
   },
   {
     main: images.heroPizza,
-    video: "/videos/pizza.mp4",
     left: images.heroChilis,
     right: images.heroTomatoes,
     bottomLeft: images.heroBowl,
@@ -93,36 +92,16 @@ export default function Hero() {
 
         <div className="relative mx-auto mt-8 w-full max-w-[720px]">
           <AnimatePresence mode="wait">
-            {slide.video ? (
-              <motion.div
-                key={slide.video}
-                initial={{ opacity: 0, y: 30, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 1.04 }}
-                transition={{ duration: 0.55 }}
-                className="relative z-10 mx-auto w-[88%] max-w-[620px] overflow-hidden rounded-[36px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
-              >
-                <video
-                  src={slide.video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="h-[340px] w-full scale-110 object-cover md:h-[400px]"
-                />
-              </motion.div>
-            ) : (
-              <motion.img
-                key={slide.main}
-                src={slide.main}
-                alt="Bite Maadi signature dish"
-                initial={{ opacity: 0, y: 30, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 1.04 }}
-                transition={{ duration: 0.55 }}
-                className="relative z-10 mx-auto w-[88%] max-w-[620px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
-              />
-            )}
+            <motion.img
+              key={slide.main}
+              src={slide.main}
+              alt="Bite Maadi signature dish"
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 1.04 }}
+              transition={{ duration: 0.55 }}
+              className="relative z-10 mx-auto w-[88%] max-w-[620px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+            />
           </AnimatePresence>
         </div>
 
