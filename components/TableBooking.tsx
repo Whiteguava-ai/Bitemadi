@@ -75,6 +75,14 @@ function tableShape(t: TableSpot) {
   return "square";
 }
 
+function chairSlots(shape: ReturnType<typeof tableShape>) {
+  if (shape === "round") return ["n", "s"];
+  if (shape === "square") return ["n", "e", "s", "w"];
+  if (shape === "oval") return ["nw", "ne", "e", "se", "sw", "w"];
+  if (shape === "banquet") return ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
+  return ["ne", "e", "se"];
+}
+
 function TableSpotButton({
   t,
   selected,
@@ -93,15 +101,20 @@ function TableSpotButton({
       aria-pressed={selected}
       aria-label={`Table ${pad(t.no)}, ${t.name}, ${t.zone}, ${t.seats} seats`}
     >
-      {shape === "booth" ? <span className="bk-spot-bench" aria-hidden /> : null}
-      <span className="bk-spot-chairs" aria-hidden>
-        {Array.from({ length: t.seats }, (_, i) => (
-          <i key={i} className={`c${i}`} />
+      <span className="bk-furn" aria-hidden>
+        {shape === "booth" ? <span className="bk-bench" /> : null}
+        {chairSlots(shape).map((slot) => (
+          <span key={slot} className={`bk-chair ${slot}`}>
+            <span className="bk-chair-back" />
+            <span className="bk-chair-seat" />
+          </span>
         ))}
+        <span className="bk-top">
+          <strong>{pad(t.no)}</strong>
+        </span>
       </span>
-      <span className="bk-spot-top">
-        <strong>{pad(t.no)}</strong>
-        <em>{t.name}</em>
+      <span className="bk-spot-cap">
+        {t.name}
         <small>{t.seats} seats</small>
       </span>
     </button>

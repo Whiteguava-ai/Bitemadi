@@ -386,249 +386,249 @@ select:focus {
 .bk-zone-spots {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  gap: 2px 4px;
-  min-height: 96px;
+  gap: 14px 16px;
+  min-height: 120px;
+  padding: 8px 4px 4px;
 }
 
 .bk-spot {
-  --spot: 84px;
-  position: relative;
-  width: var(--spot);
-  height: var(--spot);
+  --spot: 108px;
+  display: flex;
+  width: auto;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #482820;
+  color: #fff7e8;
   cursor: pointer;
   touch-action: manipulation;
 }
 
-.bk-spot.is-oval,
-.bk-spot.is-booth {
-  width: calc(var(--spot) * 1.18);
+.bk-furn {
+  position: relative;
+  width: var(--spot);
+  height: var(--spot);
 }
 
-.bk-spot.is-banquet {
-  width: min(100%, calc(var(--spot) * 1.45));
+.bk-spot.is-oval .bk-furn,
+.bk-spot.is-booth .bk-furn {
+  width: calc(var(--spot) * 1.22);
+}
+
+.bk-spot.is-banquet .bk-furn {
+  width: calc(var(--spot) * 1.55);
   height: calc(var(--spot) * 1.08);
 }
 
-.bk-spot-chairs,
-.bk-spot-bench {
-  display: none;
-}
-
-.bk-spot-bench {
+.bk-bench {
   position: absolute;
-  top: 14px;
-  bottom: 14px;
-  left: 4px;
-  width: 14px;
+  top: 16%;
+  bottom: 16%;
+  left: 2%;
+  width: 18%;
   border-radius: 10px;
-  background: #1a0d0b;
+  background: linear-gradient(90deg, #1a0c0a, #3a221c);
   box-shadow: inset 0 1px 0 rgba(255, 247, 232, 0.12);
 }
 
-.bk-spot-chairs i {
+.bk-chair {
   position: absolute;
-  width: 22px;
-  height: 9px;
-  border-radius: 4px;
-  background: #241210;
+  z-index: 1;
+  display: flex;
+  width: 26px;
+  height: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bk-chair-back {
+  width: 20px;
+  height: 6px;
+  border-radius: 7px 7px 2px 2px;
+  background: #1c0e0c;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-.bk-spot-top {
+.bk-chair-seat {
+  width: 18px;
+  height: 11px;
+  margin-top: -2px;
+  border-radius: 3px 3px 8px 8px;
+  background: linear-gradient(180deg, #3a241c, #241210);
+}
+
+.bk-chair.n {
+  top: 1%;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.bk-chair.s {
+  bottom: 1%;
+  left: 50%;
+  translate: -50% 0;
+  rotate: 180deg;
+}
+
+.bk-chair.e {
+  top: 50%;
+  right: 1%;
+  translate: 0 -50%;
+  rotate: 90deg;
+}
+
+.bk-chair.w {
+  top: 50%;
+  left: 1%;
+  translate: 0 -50%;
+  rotate: -90deg;
+}
+
+.bk-chair.nw {
+  top: 8%;
+  left: 16%;
+  rotate: -32deg;
+}
+
+.bk-chair.ne {
+  top: 8%;
+  right: 16%;
+  rotate: 32deg;
+}
+
+.bk-chair.sw {
+  bottom: 8%;
+  left: 16%;
+  rotate: -148deg;
+}
+
+.bk-chair.se {
+  bottom: 8%;
+  right: 16%;
+  rotate: 148deg;
+}
+
+.bk-spot.is-booth .bk-chair.ne {
+  top: 12%;
+  right: 4%;
+  rotate: 78deg;
+}
+
+.bk-spot.is-booth .bk-chair.e {
+  right: 2%;
+  rotate: 90deg;
+}
+
+.bk-spot.is-booth .bk-chair.se {
+  right: 4%;
+  bottom: 12%;
+  rotate: 102deg;
+}
+
+.bk-top {
   position: absolute;
-  inset: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
+  z-index: 2;
+  inset: 24%;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  background: linear-gradient(180deg, #4a2a22, #2a1410);
-  color: #fff7e8;
+  background:
+    radial-gradient(circle at 32% 28%, #7a4e3d 0%, #4a2a22 46%, #2a1410 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 247, 232, 0.14),
-    0 10px 20px rgba(0, 0, 0, 0.35);
+    inset 0 0 0 4px #1a0c0a,
+    inset 0 2px 6px rgba(255, 247, 232, 0.14),
+    0 10px 18px rgba(0, 0, 0, 0.4);
   transition:
     transform 0.2s ease,
     background 0.2s ease,
-    box-shadow 0.2s ease,
-    color 0.2s ease;
+    box-shadow 0.2s ease;
 }
 
-.bk-spot.is-square .bk-spot-top,
-.bk-spot.is-booth .bk-spot-top {
-  border-radius: 18px;
+.bk-spot.is-square .bk-top {
+  border-radius: 14px;
 }
 
-.bk-spot.is-oval .bk-spot-top {
-  inset: 12px 8px;
+.bk-spot.is-oval .bk-top {
+  inset: 26% 16%;
   border-radius: 999px;
 }
 
-.bk-spot.is-booth .bk-spot-top {
-  inset: 12px 8px 12px 14px;
+.bk-spot.is-booth .bk-top {
+  inset: 26% 18% 26% 28%;
+  border-radius: 12px;
 }
 
-.bk-spot.is-banquet .bk-spot-top {
-  inset: 14px 10px;
-  border-radius: 18px;
+.bk-spot.is-banquet .bk-top {
+  inset: 26% 14%;
+  border-radius: 16px;
 }
 
-.bk-spot-top strong {
+.bk-top strong {
   font-family: var(--font-display);
-  font-size: clamp(16px, 5vw, 22px);
+  font-size: clamp(18px, 5vw, 24px);
   line-height: 1;
   color: #fff7e8;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 
-.bk-spot-top em {
-  max-width: 90%;
-  overflow: hidden;
-  font-style: normal;
-  font-size: 9px;
+.bk-spot-cap {
+  display: flex;
+  max-width: var(--spot);
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: rgba(255, 247, 232, 0.72);
+  letter-spacing: 0.04em;
+  color: rgba(255, 247, 232, 0.78);
 }
 
-.bk-spot-top small {
-  display: none;
+.bk-spot-cap small {
   font-size: 10px;
+  font-weight: 500;
   color: rgba(252, 158, 37, 0.9);
 }
 
-.bk-spot.is-round .c0,
-.bk-spot.is-square .c0,
-.bk-spot.is-oval .c0,
-.bk-spot.is-banquet .c0 {
-  top: 6px;
-  left: 50%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-round .c1,
-.bk-spot.is-square .c2,
-.bk-spot.is-oval .c3,
-.bk-spot.is-banquet .c4 {
-  right: auto;
-  bottom: 6px;
-  left: 50%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-square .c1,
-.bk-spot.is-oval .c2,
-.bk-spot.is-banquet .c3,
-.bk-spot.is-booth .c1 {
-  top: 50%;
-  right: 6px;
-  width: 9px;
-  height: 22px;
-  translate: 0 -50%;
-}
-
-.bk-spot.is-square .c3,
-.bk-spot.is-oval .c5,
-.bk-spot.is-banquet .c7,
-.bk-spot.is-booth .c3 {
-  top: 50%;
-  left: 6px;
-  width: 9px;
-  height: 22px;
-  translate: 0 -50%;
-}
-
-.bk-spot.is-oval .c1,
-.bk-spot.is-banquet .c1 {
-  top: 8px;
-  left: 68%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-oval .c0,
-.bk-spot.is-banquet .c0 {
-  left: 32%;
-}
-
-.bk-spot.is-oval .c4,
-.bk-spot.is-banquet .c5 {
-  bottom: 8px;
-  left: 32%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-banquet .c2 {
-  top: 8px;
-  left: 50%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-banquet .c6 {
-  bottom: 8px;
-  left: 68%;
-  translate: -50% 0;
-}
-
-.bk-spot.is-booth .c0 {
-  top: 14px;
-  right: 10px;
-  width: 22px;
-}
-
-.bk-spot.is-booth .c2 {
-  right: 10px;
-  bottom: 14px;
-  width: 22px;
-}
-
-.bk-spot:hover .bk-spot-top {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 247, 232, 0.18),
-    0 14px 24px rgba(0, 0, 0, 0.4);
+.bk-spot:hover .bk-top {
+  transform: translateY(-2px) scale(1.03);
 }
 
 .bk-spot:focus-visible {
   outline: none;
 }
 
-.bk-spot:focus-visible .bk-spot-top {
+.bk-spot:focus-visible .bk-top {
   box-shadow:
-    0 0 0 4px #fc9e25,
-    0 10px 20px rgba(0, 0, 0, 0.35);
+    inset 0 0 0 4px #1a0c0a,
+    0 0 0 3px #fc9e25;
 }
 
-.bk-spot.is-on .bk-spot-top {
-  background: linear-gradient(180deg, #fc9e25, #d07a12);
+.bk-spot.is-on .bk-top {
+  background:
+    radial-gradient(circle at 32% 28%, #ffc56a 0%, #fc9e25 48%, #c56d0c 100%);
   box-shadow:
-    0 0 0 4px rgba(255, 247, 232, 0.88),
-    0 0 28px rgba(252, 158, 37, 0.45);
+    inset 0 0 0 4px #fff7e8,
+    0 0 26px rgba(252, 158, 37, 0.5);
 }
 
-.bk-spot.is-on .bk-spot-top strong,
-.bk-spot.is-on .bk-spot-top em,
-.bk-spot.is-on .bk-spot-top small {
+.bk-spot.is-on .bk-top strong {
   color: #2c0205;
+  text-shadow: none;
 }
 
-.bk-spot.is-on .bk-spot-chairs i,
-.bk-spot.is-on .bk-spot-bench {
+.bk-spot.is-on .bk-chair-back,
+.bk-spot.is-on .bk-chair-seat,
+.bk-spot.is-on .bk-bench {
   background: #fc9e25;
 }
 
-.bk-spot.is-on:hover .bk-spot-top {
-  background: linear-gradient(180deg, #ffb44a, #fc9e25);
-  box-shadow:
-    0 0 0 4px rgba(255, 247, 232, 0.88),
-    0 0 28px rgba(252, 158, 37, 0.45);
+.bk-spot.is-on .bk-spot-cap,
+.bk-spot.is-on .bk-spot-cap small {
+  color: #fc9e25;
 }
 
 .bk-picked {
@@ -1532,11 +1532,7 @@ select:focus {
   }
 
   .bk-spot {
-    --spot: 96px;
-  }
-
-  .bk-spot-top small {
-    display: block;
+    --spot: 120px;
   }
 
   .bk-help {
@@ -1560,31 +1556,7 @@ select:focus {
   }
 
   .bk-spot {
-    --spot: 108px;
-  }
-
-  .bk-spot-chairs {
-    display: block;
-  }
-
-  .bk-spot-bench {
-    display: block;
-  }
-
-  .bk-spot-top {
-    inset: 26px;
-  }
-
-  .bk-spot.is-oval .bk-spot-top {
-    inset: 26px 14px;
-  }
-
-  .bk-spot.is-booth .bk-spot-top {
-    inset: 26px 16px 26px 24px;
-  }
-
-  .bk-spot.is-banquet .bk-spot-top {
-    inset: 28px 16px;
+    --spot: 132px;
   }
 
   .bk-zone {
@@ -1725,6 +1697,6 @@ select:focus {
   }
 
   .bk-spot {
-    --spot: 118px;
+    --spot: 148px;
   }
 }
