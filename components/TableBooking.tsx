@@ -281,15 +281,15 @@ export default function TableBooking() {
 
         {!done && step === 0 ? (
           <div className="bk-floor">
-            <div className="bk-floor-legend">
-              <span>
-                <i className="is-open" /> Available
-              </span>
-              <span>
-                <i className="is-yours" /> Your table
-              </span>
-            </div>
             <div className="bk-floor-map">
+              <div className="bk-floor-legend">
+                <span>
+                  <i className="is-open" /> Available
+                </span>
+                <span>
+                  <i className="is-yours" /> Your table
+                </span>
+              </div>
               <p className="bk-floor-window">Window</p>
               {floorZones.map((zone) => {
                 const Icon = zone.icon;
