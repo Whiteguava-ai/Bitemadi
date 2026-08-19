@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { menuCategories, type MenuItem } from "@/lib/data";
 import { inr } from "@/lib/site";
+import AiWaiter from "@/components/AiWaiter";
+import type { WaiterPick } from "@/lib/ai-waiter";
 
 type TableSpot = {
   id: string;
@@ -53,6 +55,50 @@ export default function TableBooking() {
     "Place order",
   ][step];
 
+  const addPicks = (picks: WaiterPick[]) => {
+    setCart((prev) => {
+      let next = [...prev];
+      for (const p of picks) {
+        const hit = next.find((l) => l.name === p.item.name);
+        if (hit) {
+          next = next.map((l) =>
+            l.name === p.item.name
+              ? { ...l, qty: l.qty + p.qty, note: p.note || l.note }
+              : l,
+          );
+        } else {
+          next.push({ ...p.item, qty: p.qty, note: p.note });
+        }
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("bm-ai-picks");
+      if (!raw) return;
+      sessionStorage.removeItem("bm-ai-picks");
+      const stored = JSON.parse(raw) as { name: string; qty: number; note: string }[];
+      const items = menuCategories.flatMap((c) => c.items);
+      const picks: WaiterPick[] = [];
+      for (const row of stored) {
+        const item = items.find((i) => i.name === row.name);
+        if (item) {
+          picks.push({
+            item,
+            qty: row.qty,
+            note: row.note,
+            reason: "From AI waiter",
+          });
+        }
+      }
+      if (picks.length) addPicks(picks);
+    } catch {
+      /* ignore bad session data */
+    }
+  }, []);
+
   const setQty = (item: MenuItem, qty: number) => {
     setCart((prev) => {
       if (qty <= 0) {
@@ -89,7 +135,7 @@ export default function TableBooking() {
             ? "The kitchen has your table number. We’ll bring the food to you."
             : [
                 "Tap the table you’re sitting at.",
-                "Add dishes from the menu. Use Add note if the kitchen needs a request.",
+                "Talk to the waiter or pick dishes. You can remove anything from your table order.",
                 "Confirm the table, dishes, and any comments before sending.",
               ][step]}
         </p>
@@ -174,6 +220,30 @@ export default function TableBooking() {
 
         {!done && step === 1 ? (
           <div className="bk-food">
+            <AiWaiter
+              cart={cart.map((l) => ({ name: l.name, qty: l.qty }))}
+              onAdd={addPicks}
+              onRemove={(names) => {
+                setCart((prev) => prev.filter((l) => !names.includes(l.name)));
+              }}
+            />
+            {cart.length ? (
+              <div className="bk-cart">
+                <p className="bk-cart-label">Your table order · {inr(total)}</p>
+                <ul>
+                  {cart.map((l) => (
+                    <li key={l.name}>
+                      <span>
+                        {l.qty}× {l.name}
+                      </span>
+                      <button type="button" onClick={() => setQty(l, 0)}>
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
             <div className="bk-cats">
               {menuCategories.map((c) => (
                 <button
@@ -210,6 +280,15 @@ export default function TableBooking() {
                             +
                           </button>
                         </div>
+                        {qty > 0 ? (
+                          <button
+                            type="button"
+                            className="bk-note-toggle"
+                            onClick={() => setQty(item, 0)}
+                          >
+                            Remove
+                          </button>
+                        ) : null}
                         {qty > 0 ? (
                           <button
                             type="button"
@@ -278,14 +357,30 @@ export default function TableBooking() {
               <h3>Menu order</h3>
               <ul className="bk-lines">
                 {cart.map((l) => (
-                  <li key={l.name}>
-                    <span>
-                      {l.qty}× {l.name}
+                  <li key={l.name} className="bk-review-line">
+                    <div>
+                      <strong>{l.name}</strong>
                       {l.note ? (
                         <em className="bk-line-note">Kitchen note: {l.note}</em>
                       ) : null}
-                    </span>
+                    </div>
+                    <div className="bk-qty">
+                      <button type="button" onClick={() => setQty(l, l.qty - 1)}>
+                        –
+                      </button>
+                      <span>{l.qty}</span>
+                      <button type="button" onClick={() => setQty(l, l.qty + 1)}>
+                        +
+                      </button>
+                    </div>
                     <b>{inr(l.price * l.qty)}</b>
+                    <button
+                      type="button"
+                      className="bk-remove"
+                      onClick={() => setQty(l, 0)}
+                    >
+                      Remove
+                    </button>
                   </li>
                 ))}
               </ul>
