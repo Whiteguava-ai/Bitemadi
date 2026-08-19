@@ -6,6 +6,7 @@ import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import { values } from "@/lib/data";
 import { images } from "@/lib/images";
+import SiteIcon from "@/components/SiteIcon";
 
 export default function AboutPage() {
   return (
@@ -78,7 +79,7 @@ export default function AboutPage() {
           {values.map((v, i) => (
             <Reveal key={v.title} delay={i * 0.08}>
               <article className="rounded-[24px] bg-white/50 p-6">
-                <img src={v.icon} alt="" className="h-12 w-12 object-contain" />
+                <SiteIcon name={v.icon} className="h-10 w-10 text-burgundy" />
                 <h4 className="mt-4 font-display text-2xl uppercase text-brown">
                   {v.title}
                 </h4>

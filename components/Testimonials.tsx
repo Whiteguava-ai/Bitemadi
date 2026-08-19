@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { testimonials } from "@/lib/data";
-import { images } from "@/lib/images";
 import SectionHeading from "./SectionHeading";
 
 export default function Testimonials() {
@@ -36,7 +36,7 @@ export default function Testimonials() {
               transition={{ duration: 0.45 }}
               className="mt-8"
             >
-              <img src={images.quote} alt="" className="mb-6 h-10 w-auto invert-0 opacity-80" />
+              <Quote className="mb-6 h-10 w-10 text-burgundy" strokeWidth={1.5} aria-hidden="true" />
               <p className="max-w-xl text-lg leading-relaxed text-muted">
                 “{t.quote}”
               </p>
@@ -63,7 +63,7 @@ export default function Testimonials() {
               }
               className="grid h-12 w-12 place-items-center rounded-full border border-brown/15 text-brown transition hover:bg-burgundy hover:text-white"
             >
-              ←
+              <ChevronLeft className="h-5 w-5" strokeWidth={2} />
             </button>
             <button
               type="button"
@@ -71,7 +71,7 @@ export default function Testimonials() {
               onClick={() => setIndex((i) => (i + 1) % testimonials.length)}
               className="grid h-12 w-12 place-items-center rounded-full border border-brown/15 text-brown transition hover:bg-burgundy hover:text-white"
             >
-              →
+              <ChevronRight className="h-5 w-5" strokeWidth={2} />
             </button>
           </div>
         </div>

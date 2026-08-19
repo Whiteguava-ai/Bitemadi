@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/data";
 import { ArrowIcon } from "./Button";
 import Logo from "./Logo";
@@ -70,17 +71,11 @@ export default function Header() {
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="flex w-5 flex-col gap-1.5">
-              <span
-                className={`h-0.5 w-full bg-brown transition ${open ? "translate-y-2 rotate-45" : ""}`}
-              />
-              <span
-                className={`h-0.5 w-full bg-brown transition ${open ? "opacity-0" : ""}`}
-              />
-              <span
-                className={`h-0.5 w-full bg-brown transition ${open ? "-translate-y-2 -rotate-45" : ""}`}
-              />
-            </span>
+            {open ? (
+              <X className="h-5 w-5" strokeWidth={2} />
+            ) : (
+              <Menu className="h-5 w-5" strokeWidth={2} />
+            )}
           </button>
         </div>
       </div>

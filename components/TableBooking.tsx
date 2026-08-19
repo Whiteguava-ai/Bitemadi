@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Minus, Plus } from "lucide-react";
 import { menuCategories, type MenuItem } from "@/lib/data";
 import { inr } from "@/lib/site";
 import AiWaiter from "@/components/AiWaiter";
@@ -272,12 +273,20 @@ export default function TableBooking() {
                         <h3>{item.name}</h3>
                         <p>{inr(item.price)}</p>
                         <div className="bk-qty">
-                          <button type="button" onClick={() => setQty(item, qty - 1)}>
-                            –
+                          <button
+                            type="button"
+                            aria-label="Decrease quantity"
+                            onClick={() => setQty(item, qty - 1)}
+                          >
+                            <Minus className="h-3.5 w-3.5" strokeWidth={2.4} />
                           </button>
                           <span>{qty}</span>
-                          <button type="button" onClick={() => setQty(item, qty + 1)}>
-                            +
+                          <button
+                            type="button"
+                            aria-label="Increase quantity"
+                            onClick={() => setQty(item, qty + 1)}
+                          >
+                            <Plus className="h-3.5 w-3.5" strokeWidth={2.4} />
                           </button>
                         </div>
                         {qty > 0 ? (
@@ -365,12 +374,20 @@ export default function TableBooking() {
                       ) : null}
                     </div>
                     <div className="bk-qty">
-                      <button type="button" onClick={() => setQty(l, l.qty - 1)}>
-                        –
+                      <button
+                        type="button"
+                        aria-label="Decrease quantity"
+                        onClick={() => setQty(l, l.qty - 1)}
+                      >
+                        <Minus className="h-3.5 w-3.5" strokeWidth={2.4} />
                       </button>
                       <span>{l.qty}</span>
-                      <button type="button" onClick={() => setQty(l, l.qty + 1)}>
-                        +
+                      <button
+                        type="button"
+                        aria-label="Increase quantity"
+                        onClick={() => setQty(l, l.qty + 1)}
+                      >
+                        <Plus className="h-3.5 w-3.5" strokeWidth={2.4} />
                       </button>
                     </div>
                     <b>{inr(l.price * l.qty)}</b>

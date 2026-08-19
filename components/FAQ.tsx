@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Minus, Plus } from "lucide-react";
 import { faqs } from "@/lib/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -34,7 +35,11 @@ export default function FAQ() {
                       active ? "bg-burgundy text-white" : "text-brown"
                     }`}
                   >
-                    {active ? "–" : "+"}
+                    {active ? (
+                      <Minus className="h-4 w-4" strokeWidth={2} />
+                    ) : (
+                      <Plus className="h-4 w-4" strokeWidth={2} />
+                    )}
                   </span>
                 </button>
                 <div

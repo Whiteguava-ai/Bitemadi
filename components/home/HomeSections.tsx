@@ -5,6 +5,7 @@ import { inr } from "@/lib/site";
 import { ArrowButton, ArrowIcon } from "@/components/Button";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
+import SiteIcon from "@/components/SiteIcon";
 import OfferCards from "@/components/OfferCards";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -159,7 +160,7 @@ export function WhyUs() {
           {whyUs.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08}>
               <article className="rounded-[24px] bg-white/60 p-6">
-                <img src={item.icon} alt="" className="h-12 w-12 object-contain" />
+                <SiteIcon name={item.icon} className="h-10 w-10 text-burgundy" />
                 <h3 className="mt-4 font-display text-2xl uppercase text-brown">
                   {item.title}
                 </h3>

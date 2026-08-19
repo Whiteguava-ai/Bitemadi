@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Phone } from "lucide-react";
 import { ScallopTop } from "./Waves";
 import Logo from "./Logo";
 import { site } from "@/lib/site";
@@ -64,7 +65,10 @@ export default function Footer() {
               href={site.phoneHref}
               className="mt-4 inline-block text-[15px] text-white/90 hover:text-white"
             >
-              📞 {site.phone}
+              <span className="inline-flex items-center gap-2">
+                <Phone className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                {site.phone}
+              </span>
             </a>
           </div>
 

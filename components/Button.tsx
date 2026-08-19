@@ -1,22 +1,8 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 export function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M3.5 12.5L12.5 3.5M12.5 3.5H5.5M12.5 3.5V10.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <ArrowUpRight className={className} strokeWidth={2} aria-hidden="true" />;
 }
 
 export function ArrowButton({

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Mic, PhoneOff } from "lucide-react";
 import {
   itemByName,
   waiterPrompts,
@@ -323,7 +324,11 @@ export default function AiWaiter({
           disabled={busy}
           aria-label={live ? "Hang up" : "Talk to the waiter"}
         >
-          {live ? "●" : "🎤"}
+          {live ? (
+            <PhoneOff className="h-4 w-4" strokeWidth={2} />
+          ) : (
+            <Mic className="h-4 w-4" strokeWidth={2} />
+          )}
         </button>
         <button type="submit" className="aiw-go" disabled={busy || live}>
           Ask

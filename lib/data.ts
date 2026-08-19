@@ -72,22 +72,22 @@ export const whyUs = [
   {
     title: "Delicious Food",
     desc: "Crafted with fresh ingredients and bold flavors you’ll love.",
-    icon: images.iconFood,
+    icon: "food" as const,
   },
   {
     title: "Relaxing Ambience",
     desc: "Enjoy your meal in a cozy and welcoming atmosphere.",
-    icon: images.iconAmbience,
+    icon: "ambience" as const,
   },
   {
     title: "Friendly Service",
     desc: "Our team is dedicated to fast seamless service.",
-    icon: images.iconService,
+    icon: "service" as const,
   },
   {
     title: "Fresh Ingredients",
     desc: "We use freshest ingredients to ensure quality in dishes.",
-    icon: images.iconFresh,
+    icon: "fresh" as const,
   },
 ];
 
@@ -776,21 +776,21 @@ export const values = [
   {
     title: "Sustainability",
     desc: "We focus on responsible sourcing and eco-friendly practices to support future.",
-    icon: images.iconFresh,
+    icon: "sustainability" as const,
   },
   {
     title: "Quality First",
     desc: "Every dish is prepared with care using premium ingredients and standards.",
-    icon: images.iconFood,
+    icon: "quality" as const,
   },
   {
     title: "Community",
     desc: "We bring people together through food, creating moments worth sharing.",
-    icon: images.iconService,
+    icon: "community" as const,
   },
   {
     title: "Excellence",
     desc: "We strive to deliver the best experience in every bite and every visit.",
-    icon: images.iconAmbience,
+    icon: "excellence" as const,
   },
 ];

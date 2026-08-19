@@ -3,6 +3,7 @@ import CTABanner from "@/components/CTABanner";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import { eventServices, packages } from "@/lib/data";
+import { Check } from "lucide-react";
 
 export default function EventPage() {
   return (
@@ -29,7 +30,10 @@ export default function EventPage() {
                   <p className="mt-3 text-sm leading-relaxed text-muted">{s.desc}</p>
                   <ul className="mt-4 space-y-1.5 text-sm text-brown">
                     {s.items.map((item) => (
-                      <li key={item}>• {item}</li>
+                      <li key={item} className="flex items-start gap-2">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-burgundy" strokeWidth={2} />
+                        {item}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -52,7 +56,10 @@ export default function EventPage() {
                 <p className="mt-3 text-sm text-muted">{p.desc}</p>
                 <ul className="mt-5 space-y-2 text-sm text-brown">
                   {p.items.map((item) => (
-                    <li key={item}>• {item}</li>
+                    <li key={item} className="flex items-start gap-2">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-burgundy" strokeWidth={2} />
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </article>
