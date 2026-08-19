@@ -11,10 +11,11 @@ export default function OfferPage() {
       <PageHero
         title="Special Deals You Can’t Miss"
         subtitle="Grab your favorite meals at unbeatable prices - limited time only."
-      />
-      <div className="-mt-10 mb-6 flex justify-center">
-        <ArrowButton href="/menu">Order Now</ArrowButton>
-      </div>
+      >
+        <div className="mt-8 flex justify-center">
+          <ArrowButton href="/menu">Order Now</ArrowButton>
+        </div>
+      </PageHero>
       <OfferCards />
       <section className="bg-cream px-5 pb-24 md:px-8">
         <Reveal>

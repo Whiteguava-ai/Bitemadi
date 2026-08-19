@@ -39,7 +39,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-burgundy pt-28 md:pt-32">
-      <div className="relative mx-auto min-h-[720px] max-w-[1440px] px-4 pb-40 text-center md:min-h-[820px]">
+      <div className="relative z-10 mx-auto min-h-[720px] max-w-[1440px] px-4 pb-40 text-center md:min-h-[820px]">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -105,7 +105,7 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        <div className="absolute bottom-28 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        <div className="absolute bottom-36 left-1/2 z-20 flex -translate-x-1/2 gap-2">
           {slides.map((_, i) => (
             <button
               key={i}
@@ -121,7 +121,7 @@ export default function Hero() {
       </div>
 
       <svg
-        className="absolute bottom-[-1px] left-0 w-full"
+        className="pointer-events-none absolute bottom-[-1px] left-0 z-0 w-full"
         viewBox="0 0 1440 120"
         preserveAspectRatio="none"
         aria-hidden="true"
