@@ -57,7 +57,7 @@ export function MenuPreview() {
           subtitle="Explore our carefully crafted dishes — made with fresh ingredients and bold flavors, rich taste, premium quality, and delightful aroma."
           align="left"
         />
-        <ArrowButton href="/book">Book Your Table</ArrowButton>
+        <ArrowButton href="/book">Order from Table</ArrowButton>
       </div>
       <div className="mx-auto mt-12 grid max-w-[1320px] gap-6 md:grid-cols-3">
         {featuredMenu.map((item, i) => (
@@ -124,7 +124,7 @@ export function AboutPreview() {
             every bite with rich taste and quality.
           </p>
           <div className="mt-8">
-            <ArrowButton href="/book">Book Your Table</ArrowButton>
+            <ArrowButton href="/book">Order from Table</ArrowButton>
           </div>
         </Reveal>
       </div>
@@ -276,7 +276,7 @@ export function BlogPreview() {
                     href="/book"
                     className="inline-flex items-center gap-2 text-sm font-medium text-brown"
                   >
-                    Book Your Table
+                    Order from Table
                   </Link>
                 </div>
               </div>

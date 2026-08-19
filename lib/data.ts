@@ -35,16 +35,16 @@ export const offers = [
   {
     save: "30%",
     tag: "Special Discount",
-    title: "Signature Beef Burgers Rich. Juicy. Satisfying.",
+    title: "Signature Chicken Burgers Crisp. Juicy. Satisfying.",
     image: images.offerBurger,
   },
 ];
 
 export const featuredMenu = [
   {
-    name: "Signature Burger",
+    name: "Signature Chicken Burger",
     price: 299,
-    desc: "Juicy beef patty with melted cheddar, fresh lettuce, and house-made sauce.",
+    desc: "Crispy chicken patty with melted cheddar, fresh lettuce, and house-made sauce.",
     image: images.menuSignature,
   },
   {
@@ -54,10 +54,10 @@ export const featuredMenu = [
     image: images.menuPasta,
   },
   {
-    name: "Grilled Ribeye",
-    price: 599,
-    desc: "Tender ribeye steak grilled to perfection, served with savory sides",
-    image: images.menuSteak,
+    name: "Herb Roast Chicken",
+    price: 319,
+    desc: "Slow-roasted chicken with garden herbs, served with savory sides.",
+    image: images.catChicken,
   },
 ];
 
@@ -161,8 +161,8 @@ export const faqs = [
     a: "Yes. From intimate gatherings to large celebrations, we deliver exceptional food and seamless service for corporate events, private parties, and weddings.",
   },
   {
-    q: "Can I reserve a table online?",
-    a: "Yes — reserve a table through our booking page or call us at +91 820 257 6104. We’ll confirm your booking quickly.",
+    q: "Can I order from my table online?",
+    a: "Yes — choose your table number on the Order from Table page, add dishes from the menu, and send comments to the kitchen. You can also call us at +91 820 257 6104.",
   },
   {
     q: "Are your ingredients fresh?",
@@ -182,12 +182,12 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     id: "burger",
     label: "Burger Items",
     items: [
-      { name: "Classic Beef Burger", price: 199, desc: "Classic Beef Burger – Juicy grilled beef with fresh veggies", image: images.dish1 },
-      { name: "Double Cheese Burger", price: 229, desc: "Double Cheese Burger – Loaded with double cheese layers", image: images.dish2 },
-      { name: "BBQ Bacon Burger", price: 249, desc: "BBQ Bacon Burger – Smoky BBQ with crispy bacon", image: images.dish3 },
-      { name: "Spicy Chicken Burger", price: 189, desc: "Spicy Chicken Burger – Crispy chicken with spicy sauce", image: images.dish4 },
-      { name: "Crispy Zinger Burger", price: 169, desc: "Crispy Zinger Burger – Crunchy fried chicken delight", image: images.dish5 },
-      { name: "Veggie Supreme Burger", price: 319, desc: "Veggie Supreme Burger – Fresh veggie patty & greens", image: images.dish6 },
+      { name: "Classic Chicken Burger", price: 199, desc: "Classic Chicken Burger – Juicy grilled chicken with fresh veggies", image: images.dish5 },
+      { name: "Double Cheese Chicken Burger", price: 229, desc: "Double Cheese Chicken Burger – Loaded with double cheese layers", image: images.heroBurgerAlt },
+      { name: "BBQ Chicken Burger", price: 249, desc: "BBQ Chicken Burger – Smoky BBQ chicken with house sauce", image: images.menuBurgerBoard },
+      { name: "Spicy Chicken Burger", price: 189, desc: "Spicy Chicken Burger – Crispy chicken with spicy sauce", image: images.catBurger },
+      { name: "Crispy Zinger Burger", price: 169, desc: "Crispy Zinger Burger – Crunchy fried chicken delight", image: images.menuSignature },
+      { name: "Veggie Supreme Burger", price: 319, desc: "Veggie Supreme Burger – Fresh veggie patty & greens", image: images.ctaFood },
     ],
   },
   {
@@ -196,10 +196,10 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     items: [
       { name: "Margherita Pizza", price: 229, desc: "Margherita Pizza – Fresh mozzarella, basil, and tomato", image: images.heroPizza },
       { name: "Pepperoni Pizza", price: 269, desc: "Pepperoni Pizza – Loaded with spicy pepperoni slices", image: images.catPizza },
-      { name: "BBQ Chicken Pizza", price: 279, desc: "BBQ Chicken Pizza – Smoky chicken with tangy BBQ sauce", image: images.dish7 },
-      { name: "Veggie Garden Pizza", price: 249, desc: "Veggie Garden Pizza – Seasonal vegetables and herbs", image: images.dish8 },
-      { name: "Four Cheese Pizza", price: 299, desc: "Four Cheese Pizza – Melty blend of premium cheeses", image: images.dish9 },
-      { name: "Spicy Inferno Pizza", price: 269, desc: "Spicy Inferno Pizza – Chili, pepperoni, and hot sauce", image: images.dish10 },
+      { name: "BBQ Chicken Pizza", price: 279, desc: "BBQ Chicken Pizza – Smoky chicken with tangy BBQ sauce", image: images.dish15 },
+      { name: "Veggie Garden Pizza", price: 249, desc: "Veggie Garden Pizza – Seasonal vegetables and herbs", image: images.dish16 },
+      { name: "Four Cheese Pizza", price: 299, desc: "Four Cheese Pizza – Melty blend of premium cheeses", image: images.dish10 },
+      { name: "Spicy Inferno Pizza", price: 269, desc: "Spicy Inferno Pizza – Chili, pepperoni, and hot sauce", image: images.dish12 },
     ],
   },
   {
@@ -208,10 +208,10 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     items: [
       { name: "Tuscan Tomato Pasta", price: 329, desc: "Tuscan Tomato Pasta – Rich tomato sauce with herbs", image: images.menuPasta },
       { name: "Carbonara Pasta", price: 299, desc: "Carbonara Pasta – Creamy sauce with bacon and parmesan", image: images.catPasta },
-      { name: "Alfredo Pasta", price: 279, desc: "Alfredo Pasta – Silky cream sauce and garlic", image: images.dish11 },
-      { name: "Pesto Penne", price: 269, desc: "Pesto Penne – Fresh basil pesto and pine nuts", image: images.dish12 },
+      { name: "Alfredo Pasta", price: 279, desc: "Alfredo Pasta – Silky cream sauce and garlic", image: images.dish2 },
+      { name: "Pesto Penne", price: 269, desc: "Pesto Penne – Fresh basil pesto and pine nuts", image: images.dish9 },
       { name: "Truffle Risotto", price: 349, desc: "Truffle Risotto – Creamy Arborio rice with truffle oil", image: images.cateringRisotto },
-      { name: "Spicy Arrabbiata", price: 249, desc: "Spicy Arrabbiata – Bold chili tomato sauce", image: images.dish13 },
+      { name: "Spicy Arrabbiata", price: 249, desc: "Spicy Arrabbiata – Bold chili tomato sauce", image: images.dish2 },
     ],
   },
   {
@@ -219,11 +219,11 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     label: "Chicken Items",
     items: [
       { name: "Crispy Fried Chicken", price: 219, desc: "Crispy Fried Chicken – Golden crunch, juicy inside", image: images.catChicken },
-      { name: "BBQ Chicken Wings", price: 199, desc: "BBQ Chicken Wings – Smoky, tangy, and saucy", image: images.wings },
-      { name: "Spicy Chicken Burger", price: 189, desc: "Spicy Chicken Burger – Crispy chicken with spicy sauce", image: images.dish4 },
+      { name: "BBQ Chicken Wings", price: 199, desc: "BBQ Chicken Wings – Smoky, tangy, and saucy", image: images.dish8 },
+      { name: "Spicy Chicken Burger", price: 189, desc: "Spicy Chicken Burger – Crispy chicken with spicy sauce", image: images.catBurger },
       { name: "Grilled Chicken Sandwich", price: 229, desc: "Grilled Chicken Sandwich – Fresh veggies and signature sauce", image: images.cateringSandwich },
-      { name: "Crispy Zinger Burger", price: 169, desc: "Crispy Zinger Burger – Crunchy fried chicken delight", image: images.dish5 },
-      { name: "Herb Roast Chicken", price: 319, desc: "Herb Roast Chicken – Slow roasted with garden herbs", image: images.dish14 },
+      { name: "Crispy Zinger Burger", price: 169, desc: "Crispy Zinger Burger – Crunchy fried chicken delight", image: images.menuSignature },
+      { name: "Herb Roast Chicken", price: 319, desc: "Herb Roast Chicken – Slow roasted with garden herbs", image: images.heroBowl },
     ],
   },
   {
@@ -231,11 +231,11 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     label: "Salad Items",
     items: [
       { name: "Caesar Salad", price: 199, desc: "Caesar Salad – Crisp romaine, parmesan, and dressing", image: images.catSalad },
-      { name: "Garden Fresh Bowl", price: 219, desc: "Garden Fresh Bowl – Seasonal greens and veggies", image: images.dish15 },
+      { name: "Garden Fresh Bowl", price: 219, desc: "Garden Fresh Bowl – Seasonal greens and veggies", image: images.catSalad },
       { name: "Tuna Poke Bowl", price: 269, desc: "Tuna Poke Bowl – Fresh tuna, avocado, and rice", image: images.catSalad },
-      { name: "Grilled Chicken Salad", price: 249, desc: "Grilled Chicken Salad – Lean protein over greens", image: images.dish16 },
-      { name: "Mediterranean Salad", price: 229, desc: "Mediterranean Salad – Olives, feta, and tomatoes", image: images.dish17 },
-      { name: "Avocado Crunch Salad", price: 219, desc: "Avocado Crunch Salad – Creamy avocado and seeds", image: images.dish18 },
+      { name: "Grilled Chicken Salad", price: 249, desc: "Grilled Chicken Salad – Lean protein over greens", image: images.cateringSandwich },
+      { name: "Mediterranean Salad", price: 229, desc: "Mediterranean Salad – Olives, feta, and tomatoes", image: images.catSalad },
+      { name: "Avocado Crunch Salad", price: 219, desc: "Avocado Crunch Salad – Creamy avocado and seeds", image: images.catSalad },
     ],
   },
   {
@@ -243,23 +243,23 @@ export const menuCategories: { id: string; label: string; items: MenuItem[] }[] 
     label: "Sides & Snacks",
     items: [
       { name: "French Fries", price: 99, desc: "French Fries – Golden, salted, and crispy", image: images.catFries },
-      { name: "Loaded Nachos", price: 189, desc: "Loaded Nachos – Cheese, salsa, and toppings", image: images.blogNachos },
-      { name: "Onion Rings", price: 119, desc: "Onion Rings – Crispy coating, sweet onion", image: images.blogOnion },
-      { name: "Sweet Potato Fries", price: 129, desc: "Sweet Potato Fries – Lightly seasoned and crisp", image: images.menuBurgerBoard },
-      { name: "Garlic Bread", price: 99, desc: "Garlic Bread – Toasted with herbs and butter", image: images.dish8 },
-      { name: "Mozzarella Bites", price: 149, desc: "Mozzarella Bites – Gooey cheese, golden crunch", image: images.dish9 },
+      { name: "Loaded Nachos", price: 189, desc: "Loaded Nachos – Cheese, salsa, and toppings", image: images.dish1 },
+      { name: "Onion Rings", price: 119, desc: "Onion Rings – Crispy coating, sweet onion", image: images.dish7 },
+      { name: "Sweet Potato Fries", price: 129, desc: "Sweet Potato Fries – Lightly seasoned and crisp", image: images.dish6 },
+      { name: "Garlic Bread", price: 99, desc: "Garlic Bread – Toasted with herbs and butter", image: images.catSandwich },
+      { name: "Mozzarella Bites", price: 149, desc: "Mozzarella Bites – Gooey cheese, golden crunch", image: images.dish7 },
     ],
   },
   {
     id: "desserts",
     label: "Desserts & Drinks",
     items: [
-      { name: "Chocolate Brownie", price: 129, desc: "Chocolate Brownie – Rich, fudgy, and warm", image: images.dish10 },
-      { name: "Classic Milkshake", price: 119, desc: "Classic Milkshake – Thick, creamy, and cold", image: images.dish11 },
-      { name: "Fresh Lemonade", price: 79, desc: "Fresh Lemonade – Bright citrus refreshment", image: images.dish12 },
-      { name: "Tiramisu Cup", price: 149, desc: "Tiramisu Cup – Coffee, cocoa, and cream", image: images.dish13 },
-      { name: "Iced Coffee", price: 99, desc: "Iced Coffee – Smooth brew over ice", image: images.dish14 },
-      { name: "Berry Cheesecake", price: 169, desc: "Berry Cheesecake – Creamy with fresh berries", image: images.dish15 },
+      { name: "Chocolate Brownie", price: 129, desc: "Chocolate Brownie – Rich, fudgy, and warm", image: images.dessertBrownie },
+      { name: "Classic Milkshake", price: 119, desc: "Classic Milkshake – Thick, creamy, and cold", image: images.drinkMilkshake },
+      { name: "Fresh Lemonade", price: 79, desc: "Fresh Lemonade – Bright citrus refreshment", image: images.drinkLemonade },
+      { name: "Tiramisu Cup", price: 149, desc: "Tiramisu Cup – Coffee, cocoa, and cream", image: images.dessertTiramisu },
+      { name: "Iced Coffee", price: 99, desc: "Iced Coffee – Smooth brew over ice", image: images.drinkIcedCoffee },
+      { name: "Berry Cheesecake", price: 169, desc: "Berry Cheesecake – Creamy with fresh berries", image: images.dessertCheesecake },
     ],
   },
 ];
@@ -285,7 +285,7 @@ export const blogPosts = [
           "The foundation of a great burger begins with fresh, high-quality ingredients for perfect taste, texture, and satisfaction every single bite guaranteed.",
         ],
         bullets: [
-          "Premium beef ensures rich flavor",
+          "Juicy chicken patties ensure rich flavor",
           "Fresh vegetables add crunch and balance",
           "Soft, toasted buns complete the texture",
         ],

@@ -59,7 +59,7 @@ export default function Header() {
             href="/book"
             className="inline-flex items-center gap-2 rounded-full bg-burgundy px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-burgundy-dark md:px-5"
           >
-            Book a Table
+            Order from Table
             <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15">
               <ArrowIcon className="h-3.5 w-3.5" />
             </span>
@@ -101,7 +101,7 @@ export default function Header() {
               href="/book"
               className="rounded-xl px-3 py-3 font-medium text-burgundy hover:bg-burgundy/5"
             >
-              Book a Table
+              Order from Table
             </Link>
           </nav>
         </div>

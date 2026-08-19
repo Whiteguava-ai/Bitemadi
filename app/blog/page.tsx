@@ -37,7 +37,7 @@ export default function BlogPage() {
                       Read Article <ArrowIcon className="h-3.5 w-3.5" />
                     </Link>
                     <Link href="/book" className="text-sm font-medium text-brown">
-                      Book Your Table
+                      Order from Table
                     </Link>
                   </div>
                 </div>

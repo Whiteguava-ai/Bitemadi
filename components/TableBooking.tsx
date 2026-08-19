@@ -1,238 +1,328 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { images } from "@/lib/images";
-import { ArrowIcon } from "./Button";
+import { useState } from "react";
+import { menuCategories, type MenuItem } from "@/lib/data";
+import { inr } from "@/lib/site";
 
 type TableSpot = {
   id: string;
+  no: number;
   name: string;
   zone: string;
   seats: number;
-  x: number;
-  y: number;
-  shape: "round" | "booth" | "square";
-  taken?: boolean;
 };
 
+type CartLine = MenuItem & { qty: number; note: string };
+
 const tables: TableSpot[] = [
-  { id: "w1", name: "Aurora", zone: "Window", seats: 2, x: 18, y: 22, shape: "round" },
-  { id: "w2", name: "Solstice", zone: "Window", seats: 2, x: 38, y: 18, shape: "round", taken: true },
-  { id: "w3", name: "Ember", zone: "Window", seats: 4, x: 58, y: 22, shape: "square" },
-  { id: "b1", name: "Velvet", zone: "Booth", seats: 4, x: 82, y: 28, shape: "booth" },
-  { id: "c1", name: "Hearth", zone: "Center", seats: 6, x: 36, y: 52, shape: "round" },
-  { id: "c2", name: "Noir", zone: "Center", seats: 4, x: 58, y: 54, shape: "round" },
-  { id: "g1", name: "Garden", zone: "Patio", seats: 4, x: 18, y: 72, shape: "square" },
-  { id: "p1", name: "Private", zone: "Nook", seats: 8, x: 78, y: 70, shape: "booth" },
+  { id: "w1", no: 1, name: "Aurora", zone: "Window", seats: 2 },
+  { id: "w2", no: 2, name: "Solstice", zone: "Window", seats: 2 },
+  { id: "w3", no: 3, name: "Ember", zone: "Window", seats: 4 },
+  { id: "b1", no: 4, name: "Velvet", zone: "Booth", seats: 4 },
+  { id: "c1", no: 5, name: "Hearth", zone: "Center", seats: 6 },
+  { id: "c2", no: 6, name: "Noir", zone: "Center", seats: 4 },
+  { id: "g1", no: 7, name: "Garden", zone: "Patio", seats: 4 },
+  { id: "p1", no: 8, name: "Private", zone: "Nook", seats: 8 },
 ];
 
-const moods = [
-  { id: "lunch", label: "Lunch Light", time: "12:30 PM", note: "Sun on the tables", tone: "#ffeabe" },
-  { id: "sunset", label: "Golden Hour", time: "5:30 PM", note: "Warm & unhurried", tone: "#fc9e25" },
-  { id: "dinner", label: "Candle Dinner", time: "7:30 PM", note: "The main sitting", tone: "#920711" },
-  { id: "late", label: "After Dark", time: "9:30 PM", note: "Low lights, slow bites", tone: "#2c0205" },
-];
+const steps = ["Table", "Menu", "Confirm"];
 
-function startOfDay(d: Date) {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+function pad(n: number) {
+  return String(n).padStart(2, "0");
 }
 
 export default function TableBooking() {
-  const days = useMemo(() => {
-    const today = startOfDay(new Date());
-    return Array.from({ length: 10 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      return d;
+  const [step, setStep] = useState(0);
+  const [table, setTable] = useState<TableSpot | null>(null);
+  const [cart, setCart] = useState<CartLine[]>([]);
+  const [comment, setComment] = useState("");
+  const [openNote, setOpenNote] = useState<string | null>(null);
+  const [category, setCategory] = useState(menuCategories[0].id);
+  const [done, setDone] = useState(false);
+
+  const menu = menuCategories.find((c) => c.id === category) ?? menuCategories[0];
+  const total = cart.reduce((s, l) => s + l.price * l.qty, 0);
+  const count = cart.reduce((s, l) => s + l.qty, 0);
+
+  const canNext =
+    (step === 0 && !!table) || (step === 1 && count > 0) || step === 2;
+
+  const nextLabel = [
+    table ? `Order from table ${pad(table.no)}` : "Select a table first",
+    count ? `Review order · ${inr(total)}` : "Add a dish to continue",
+    "Place order",
+  ][step];
+
+  const setQty = (item: MenuItem, qty: number) => {
+    setCart((prev) => {
+      if (qty <= 0) {
+        if (openNote === item.name) setOpenNote(null);
+        return prev.filter((l) => l.name !== item.name);
+      }
+      const hit = prev.find((l) => l.name === item.name);
+      if (!hit) return [...prev, { ...item, qty, note: "" }];
+      return prev.map((l) => (l.name === item.name ? { ...l, qty } : l));
     });
-  }, []);
+  };
 
-  const [date, setDate] = useState(days[1] ?? days[0]);
-  const [mood, setMood] = useState(moods[2]);
-  const [table, setTable] = useState(tables[4]);
-  const [guests, setGuests] = useState(2);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [sent, setSent] = useState(false);
-
-  const maxSeats = table.seats;
-  const guestSafe = Math.min(guests, maxSeats);
+  const goNext = () => {
+    if (!canNext) return;
+    if (step === 2) {
+      setDone(true);
+      return;
+    }
+    setStep((s) => s + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="book-stage">
-      <div className="book-canvas">
-        <img src={images.heroChilis} alt="" className="book-float book-float-l" />
-        <img src={images.heroTomatoes} alt="" className="book-float book-float-r" />
+    <div className="bk">
+      <div className="bk-wrap">
+        <p className="bk-kicker">Order from table · Bite Maadi</p>
+        <h1 className="bk-title">
+          {done
+            ? "Order placed"
+            : ["Choose your table", "Order from the menu", "Check your order"][step]}
+        </h1>
+        <p className="bk-help">
+          {done
+            ? "The kitchen has your table number. We’ll bring the food to you."
+            : [
+                "Tap the table you’re sitting at.",
+                "Add dishes from the menu. Use Add note if the kitchen needs a request.",
+                "Confirm the table, dishes, and any comments before sending.",
+              ][step]}
+        </p>
 
-        <header className="book-intro">
-          <p>Tonight’s floor</p>
-          <h1>Pick a table. Claim the night.</h1>
-        </header>
-
-        <aside className="book-dates">
-          <span className="book-kicker">When</span>
-          {days.map((d) => {
-            const active = d.toDateString() === date.toDateString();
-            return (
-              <button
-                key={d.toISOString()}
-                type="button"
-                className={`book-day${active ? " is-on" : ""}`}
-                onClick={() => setDate(d)}
+        {!done ? (
+          <div className="bk-steps" aria-label="Order steps">
+            {steps.map((label, i) => (
+              <div
+                key={label}
+                className={`bk-step${i === step ? " is-on" : ""}${i < step ? " is-done" : ""}`}
               >
-                <em>{d.toLocaleDateString("en-US", { weekday: "short" })}</em>
-                <strong>{d.getDate()}</strong>
-                <small>{d.toLocaleDateString("en-US", { month: "short" })}</small>
-              </button>
-            );
-          })}
-        </aside>
+                <span>{i + 1}</span>
+                {label}
+              </div>
+            ))}
+          </div>
+        ) : null}
 
-        <section className="book-floor">
-          <div className="floor-label floor-label-n">Window wall</div>
-          <div className="floor-label floor-label-s">Garden patio</div>
-          <div className="floor-label floor-label-e">Private nook</div>
-          <div className="kitchen">Open kitchen</div>
-          <div className="bar">Bar</div>
+        {table && !done ? (
+          <p className="bk-status">
+            Ordering from table {pad(table.no)} · {table.name} · {table.zone}
+            {count ? ` · ${count} items` : ""}
+          </p>
+        ) : null}
 
-          {tables.map((t) => (
+        {done && table ? (
+          <div className="bk-done">
+            <p className="bk-done-no">Table {pad(table.no)}</p>
+            <h2>Order sent</h2>
+            <ul>
+              <li>
+                {table.name} · {table.zone}
+              </li>
+              <li>
+                {count} dishes · {inr(total)}
+              </li>
+              {comment ? <li>Kitchen: {comment}</li> : null}
+            </ul>
+            <ul className="bk-done-food">
+              {cart.map((l) => (
+                <li key={l.name}>
+                  {l.qty}× {l.name}
+                  {l.note ? ` — ${l.note}` : ""}
+                </li>
+              ))}
+            </ul>
             <button
-              key={t.id}
               type="button"
-              disabled={t.taken}
+              className="bk-btn"
               onClick={() => {
-                setTable(t);
-                setGuests((g) => Math.min(g, t.seats));
+                setDone(false);
+                setStep(0);
+                setTable(null);
+                setCart([]);
+                setComment("");
+                setOpenNote(null);
               }}
-              className={`spot spot-${t.shape}${table.id === t.id ? " is-on" : ""}${t.taken ? " is-taken" : ""}`}
-              style={{ left: `${t.x}%`, top: `${t.y}%` }}
             >
-              <span className="spot-ring" />
-              <span className="spot-chairs" aria-hidden>
-                {Array.from({ length: Math.min(t.seats, 6) }).map((_, i) => (
-                  <i key={i} />
-                ))}
-              </span>
-              <b>{t.name}</b>
-              <small>{t.taken ? "Taken" : `${t.seats} seats`}</small>
+              New table order
             </button>
-          ))}
-        </section>
+          </div>
+        ) : null}
 
-        <aside className="book-panel">
-          <div className="moods">
-            <span className="book-kicker">Sitting</span>
-            {moods.map((m) => (
+        {!done && step === 0 ? (
+          <div className="bk-tables">
+            {tables.map((t) => (
               <button
-                key={m.id}
+                key={t.id}
                 type="button"
-                className={`mood${mood.id === m.id ? " is-on" : ""}`}
-                onClick={() => setMood(m)}
+                className={`bk-table${table?.id === t.id ? " is-on" : ""}`}
+                onClick={() => setTable(t)}
               >
-                <span className="mood-swatch" style={{ background: m.tone }} />
+                <strong>{pad(t.no)}</strong>
                 <span>
-                  <strong>{m.label}</strong>
-                  <em>
-                    {m.time} · {m.note}
-                  </em>
+                  <b>{t.name}</b>
+                  {`${t.zone} · ${t.seats} seats`}
                 </span>
               </button>
             ))}
           </div>
+        ) : null}
 
-          <div className="party">
-            <span className="book-kicker">Place settings</span>
-            <div className="party-row">
-              <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 1))}>
-                –
-              </button>
-              <div className="plates">
-                {Array.from({ length: maxSeats }).map((_, i) => (
-                  <span key={i} className={i < guestSafe ? "is-set" : ""} />
+        {!done && step === 1 ? (
+          <div className="bk-food">
+            <div className="bk-cats">
+              {menuCategories.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  className={category === c.id ? "is-on" : ""}
+                  onClick={() => setCategory(c.id)}
+                >
+                  {c.label.replace(" Items", "")}
+                </button>
+              ))}
+            </div>
+
+            <div className="bk-dishes">
+              {menu.items.map((item) => {
+                const line = cart.find((l) => l.name === item.name);
+                const qty = line?.qty ?? 0;
+                const noting = openNote === item.name;
+                return (
+                  <article key={item.name} className="bk-dish">
+                    <div className="bk-dish-row">
+                      <div className="bk-dish-media">
+                        <img src={item.image} alt={item.name} />
+                      </div>
+                      <div className="bk-dish-body">
+                        <h3>{item.name}</h3>
+                        <p>{inr(item.price)}</p>
+                        <div className="bk-qty">
+                          <button type="button" onClick={() => setQty(item, qty - 1)}>
+                            –
+                          </button>
+                          <span>{qty}</span>
+                          <button type="button" onClick={() => setQty(item, qty + 1)}>
+                            +
+                          </button>
+                        </div>
+                        {qty > 0 ? (
+                          <button
+                            type="button"
+                            className={`bk-note-toggle${line?.note || noting ? " is-on" : ""}`}
+                            onClick={() => setOpenNote(noting ? null : item.name)}
+                          >
+                            {line?.note ? "Edit kitchen note" : "Add kitchen note"}
+                          </button>
+                        ) : null}
+                      </div>
+                    </div>
+                    {qty > 0 && noting ? (
+                      <div className="bk-dish-note">
+                        <p className="bk-dish-note-label">Kitchen note</p>
+                        <p className="bk-dish-note-hint">
+                          For {item.name} only — extra spicy, no onion, allergy…
+                        </p>
+                        <textarea
+                          rows={2}
+                          value={line?.note ?? ""}
+                          onChange={(e) =>
+                            setCart((prev) =>
+                              prev.map((l) =>
+                                l.name === item.name ? { ...l, note: e.target.value } : l,
+                              ),
+                            )
+                          }
+                          placeholder="Type the request for this dish"
+                        />
+                      </div>
+                    ) : null}
+                    {qty > 0 && !noting && line?.note ? (
+                      <p className="bk-dish-note-saved">Note: {line.note}</p>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
+
+            <section className="bk-comment">
+              <p className="bk-comment-label">Comment for the whole order</p>
+              <p className="bk-comment-hint">
+                This is sent to the kitchen with table {table ? pad(table.no) : "—"}.
+                Allergies, packing, or anything for every dish.
+              </p>
+              <textarea
+                rows={3}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Example: peanut allergy at the table"
+              />
+            </section>
+          </div>
+        ) : null}
+
+        {!done && step === 2 && table ? (
+          <div className="bk-review">
+            <section className="bk-card">
+              <h3>Table</h3>
+              <p className="bk-big">Table {pad(table.no)}</p>
+              <p>
+                {table.name} · {table.zone}
+              </p>
+            </section>
+            <section className="bk-card">
+              <h3>Menu order</h3>
+              <ul className="bk-lines">
+                {cart.map((l) => (
+                  <li key={l.name}>
+                    <span>
+                      {l.qty}× {l.name}
+                      {l.note ? (
+                        <em className="bk-line-note">Kitchen note: {l.note}</em>
+                      ) : null}
+                    </span>
+                    <b>{inr(l.price * l.qty)}</b>
+                  </li>
                 ))}
-              </div>
+              </ul>
+              {comment ? (
+                <div className="bk-comment-preview">
+                  <p className="bk-comment-label">Order comment</p>
+                  <p>{comment}</p>
+                </div>
+              ) : null}
+              <p className="bk-big">{inr(total)}</p>
+            </section>
+          </div>
+        ) : null}
+
+        {!done ? (
+          <div className="bk-foot">
+            {step > 0 ? (
               <button
                 type="button"
-                onClick={() => setGuests((g) => Math.min(maxSeats, g + 1))}
+                className="bk-btn is-ghost"
+                onClick={() => setStep((s) => Math.max(0, s - 1))}
               >
-                +
+                Back
               </button>
-            </div>
-            <p>
-              {guestSafe} of {maxSeats} at Table {table.name}
-            </p>
-          </div>
-
-          <form
-            className="ticket"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
-          >
-            <span className="book-kicker">Your name on the card</span>
-            <input
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Full name"
-            />
-            <input
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+91 820 257 6104"
-            />
-            <button type="submit">
-              Hold this table
-              <ArrowIcon className="h-3.5 w-3.5" />
-            </button>
-          </form>
-        </aside>
-
-        <AnimatePresence>
-          {sent ? (
-            <motion.div
-              className="book-pass"
-              initial={{ opacity: 0, scale: 0.92, y: 24 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0 }}
+            ) : (
+              <span />
+            )}
+            <button
+              type="button"
+              className="bk-btn"
+              disabled={!canNext}
+              onClick={goNext}
             >
-              <div className="pass-stub">
-                <span className="logo-mark is-light" style={{ fontSize: 22 }}>
-                  Bite Maadi
-                </span>
-                <p>Admit one table</p>
-              </div>
-              <div className="pass-body">
-                <p>You’re in</p>
-                <h2>
-                  Table {table.name}
-                  <br />
-                  {mood.label}
-                </h2>
-                <ul>
-                  <li>
-                    {date.toLocaleDateString("en-US", {
-                      weekday: "long",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </li>
-                  <li>{mood.time}</li>
-                  <li>
-                    {guestSafe} guests · {table.zone}
-                  </li>
-                  <li>{name}</li>
-                </ul>
-                <button type="button" onClick={() => setSent(false)}>
-                  Choose another table
-                </button>
-              </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+              {nextLabel}
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

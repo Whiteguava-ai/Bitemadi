@@ -93,10 +93,10 @@ export default function ContactPage() {
               href="/book"
               className="block rounded-[28px] bg-burgundy p-6 text-white transition hover:bg-burgundy-dark"
             >
-              <p className="text-sm text-gold">Reservations</p>
-              <p className="mt-1 font-display text-3xl uppercase">Book a Table</p>
+              <p className="text-sm text-gold">Table order</p>
+              <p className="mt-1 font-display text-3xl uppercase">Order from Table</p>
               <p className="mt-2 text-sm text-white/75">
-                Pick a date, time, and party size — we’ll save your seat.
+                Pick your table number and send the kitchen your order.
               </p>
             </Link>
           </div>

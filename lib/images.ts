@@ -98,6 +98,13 @@ export const images = {
   dish16: img("YS9LRJXwyDIUYf5hPzuiiZXXqIU.png"),
   dish17: img("dZVXVXh1CfukyFMs1CWSSHW8RQ.png"),
   dish18: img("geEkFrxRCXme0xk2fVivVmvVLA.png"),
+
+  dessertBrownie: img("dessert-brownie.jpg"),
+  drinkMilkshake: img("drink-milkshake.jpg"),
+  drinkLemonade: img("drink-lemonade.jpg"),
+  dessertTiramisu: img("dessert-tiramisu.jpg"),
+  drinkIcedCoffee: img("drink-iced-coffee.jpg"),
+  dessertCheesecake: img("dessert-cheesecake.jpg"),
   contactArt: img("7nv5vQHZkqrq2M6lOicVkvy692Q.png"),
   smallIcon1: img("2JfKHabipTPU2CIGv3YaX0fug.png"),
   smallIcon2: img("7vZWZAEixuocByUxRoq7wJUzgG0.png"),
