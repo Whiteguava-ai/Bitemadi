@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { Lamp, Minus, Plus, Sofa, Sparkles, Sun, TreePalm } from "lucide-react";
 import { menuCategories, type MenuItem } from "@/lib/data";
 import { inr } from "@/lib/site";
 import AiWaiter from "@/components/AiWaiter";
@@ -28,10 +28,84 @@ const tables: TableSpot[] = [
   { id: "p1", no: 8, name: "Private", zone: "Nook", seats: 8 },
 ];
 
+const floorZones = [
+  {
+    id: "Window",
+    hint: "Street light",
+    icon: Sun,
+    tables: tables.filter((t) => t.zone === "Window"),
+  },
+  {
+    id: "Booth",
+    hint: "Along the wall",
+    icon: Sofa,
+    tables: tables.filter((t) => t.zone === "Booth"),
+  },
+  {
+    id: "Center",
+    hint: "Main room",
+    icon: Lamp,
+    tables: tables.filter((t) => t.zone === "Center"),
+  },
+  {
+    id: "Patio",
+    hint: "Open air",
+    icon: TreePalm,
+    tables: tables.filter((t) => t.zone === "Patio"),
+  },
+  {
+    id: "Nook",
+    hint: "Quiet corner",
+    icon: Sparkles,
+    tables: tables.filter((t) => t.zone === "Nook"),
+  },
+] as const;
+
 const steps = ["Table", "Menu", "Confirm"];
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
+}
+
+function tableShape(t: TableSpot) {
+  if (t.zone === "Booth") return "booth";
+  if (t.seats <= 2) return "round";
+  if (t.seats >= 8) return "banquet";
+  if (t.seats >= 6) return "oval";
+  return "square";
+}
+
+function TableSpotButton({
+  t,
+  selected,
+  onSelect,
+}: {
+  t: TableSpot;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  const shape = tableShape(t);
+  return (
+    <button
+      type="button"
+      className={`bk-spot is-${shape}${selected ? " is-on" : ""}`}
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`Table ${pad(t.no)}, ${t.name}, ${t.zone}, ${t.seats} seats`}
+    >
+      {shape === "booth" ? <span className="bk-spot-bench" aria-hidden /> : null}
+      <span className="bk-spot-chairs" aria-hidden>
+        {Array.from({ length: t.seats }, (_, i) => (
+          <i key={i} className={`c${i}`} />
+        ))}
+      </span>
+      <span className="bk-spot-top">
+        <strong>{pad(t.no)}</strong>
+        <em>{t.name}</em>
+        <small>{t.seats} seats</small>
+      </span>
+    </button>
+  );
 }
 
 export default function TableBooking() {
@@ -53,6 +127,11 @@ export default function TableBooking() {
   const nextLabel = [
     table ? `Order from table ${pad(table.no)}` : "Select a table first",
     count ? `Review order · ${inr(total)}` : "Add a dish to continue",
+    "Place order",
+  ][step];
+  const nextShort = [
+    table ? `Continue · ${pad(table.no)}` : "Pick a table",
+    count ? `Review · ${inr(total)}` : "Add a dish",
     "Place order",
   ][step];
 
@@ -135,7 +214,7 @@ export default function TableBooking() {
           {done
             ? "The kitchen has your table number. We’ll bring the food to you."
             : [
-                "Tap the table you’re sitting at.",
+                "Tap the table you’re sitting at — the floor is the cafe.",
                 "Talk to the waiter or pick dishes. You can remove anything from your table order.",
                 "Confirm the table, dishes, and any comments before sending.",
               ][step]}
@@ -155,7 +234,7 @@ export default function TableBooking() {
           </div>
         ) : null}
 
-        {table && !done ? (
+        {table && !done && step > 0 ? (
           <p className="bk-status">
             Ordering from table {pad(table.no)} · {table.name} · {table.zone}
             {count ? ` · ${count} items` : ""}
@@ -201,21 +280,57 @@ export default function TableBooking() {
         ) : null}
 
         {!done && step === 0 ? (
-          <div className="bk-tables">
-            {tables.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                className={`bk-table${table?.id === t.id ? " is-on" : ""}`}
-                onClick={() => setTable(t)}
-              >
-                <strong>{pad(t.no)}</strong>
+          <div className="bk-floor">
+            <div className="bk-floor-legend">
+              <span>
+                <i className="is-open" /> Available
+              </span>
+              <span>
+                <i className="is-yours" /> Your table
+              </span>
+            </div>
+            <div className="bk-floor-map">
+              <p className="bk-floor-window">Window</p>
+              {floorZones.map((zone) => {
+                const Icon = zone.icon;
+                return (
+                  <section
+                    key={zone.id}
+                    className={`bk-zone is-${zone.id.toLowerCase()}`}
+                  >
+                    <p className="bk-zone-label">
+                      <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+                      <span>{zone.id}</span>
+                      <em>{zone.hint}</em>
+                    </p>
+                    <div className="bk-zone-spots">
+                      {zone.tables.map((t) => (
+                        <TableSpotButton
+                          key={t.id}
+                          t={t}
+                          selected={table?.id === t.id}
+                          onSelect={() => setTable(t)}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
+              <p className="bk-floor-door">Entrance</p>
+            </div>
+            {table ? (
+              <div className="bk-picked" aria-live="polite">
+                <span className="bk-picked-no">{pad(table.no)}</span>
                 <span>
-                  <b>{t.name}</b>
-                  {`${t.zone} · ${t.seats} seats`}
+                  <b>
+                    You’re at {table.name}
+                  </b>
+                  {table.zone} · {table.seats} seats
                 </span>
-              </button>
-            ))}
+              </div>
+            ) : (
+              <p className="bk-floor-hint">Pick the table that matches where you’re sitting.</p>
+            )}
           </div>
         ) : null}
 
@@ -431,7 +546,8 @@ export default function TableBooking() {
               disabled={!canNext}
               onClick={goNext}
             >
-              {nextLabel}
+              <span className="bk-btn-wide">{nextLabel}</span>
+              <span className="bk-btn-narrow">{nextShort}</span>
             </button>
           </div>
         ) : null}

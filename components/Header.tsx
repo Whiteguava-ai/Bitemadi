@@ -56,15 +56,18 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/book"
-            className="inline-flex items-center gap-2 rounded-full bg-burgundy px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-burgundy-dark md:px-5"
-          >
-            Order from Table
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15">
-              <ArrowIcon className="h-3.5 w-3.5" />
-            </span>
-          </Link>
+          {pathname !== "/book" ? (
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 rounded-full bg-burgundy px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-burgundy-dark sm:px-4 md:px-5 md:py-2.5"
+            >
+              <span className="hidden sm:inline">Order from Table</span>
+              <span className="sm:hidden">Order</span>
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15">
+                <ArrowIcon className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+          ) : null}
           <button
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full border border-brown/10 text-brown lg:hidden"

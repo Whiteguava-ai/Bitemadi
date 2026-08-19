@@ -314,7 +314,7 @@ export default function AiWaiter({
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="2 zingers, extra spicy — or remove the pizza"
+          placeholder="What do you want?"
           aria-label="Type what you want"
         />
         <button
